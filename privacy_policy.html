@@ -40,7 +40,7 @@
     }
     h3 { font-size: 16px; color: #1e293b; margin-top: 24px; margin-bottom: 8px; font-weight: 600; }
     p { margin-bottom: 12px; color: #334155; }
-    ul { padding-left: 24px; margin-bottom: 16px; }
+    ul, ol { padding-left: 24px; margin-bottom: 16px; }
     li { margin-bottom: 8px; color: #334155; }
     table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
     th, td { border: 1px solid #e2e8f0; padding: 12px 16px; text-align: left; }
@@ -117,11 +117,28 @@
       color: #94a3b8;
       font-size: 13px;
     }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .summary-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .summary-card .icon { font-size: 28px; margin-bottom: 8px; }
+    .summary-card h4 { font-size: 14px; color: #0f172a; margin-bottom: 4px; }
+    .summary-card p { font-size: 12px; color: #64748b; margin-bottom: 0; }
     @media (max-width: 600px) {
       body { padding: 24px 16px; }
       h1 { font-size: 24px; }
       h2 { font-size: 18px; margin-top: 32px; }
       .two-col { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -132,16 +149,40 @@
     <h1>Privacy Policy</h1>
     <div class="meta">
       <span><strong>Developer:</strong> Godi Narayana Swamy</span>
-      <span><strong>Effective:</strong> June 11, 2026</span>
-      <span><strong>Version:</strong> 2.0</span>
+      <span><strong>Effective:</strong> July 10, 2026</span>
+      <span><strong>Version:</strong> 1.0</span>
     </div>
   </header>
 
+  <!-- Quick summary -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="icon">&#128274;</div>
+      <h4>100% Offline</h4>
+      <p>No servers. No cloud. All data lives on your phone.</p>
+    </div>
+    <div class="summary-card">
+      <div class="icon">&#128683;</div>
+      <h4>No Tracking</h4>
+      <p>Zero analytics, zero telemetry. None.</p>
+    </div>
+    <div class="summary-card">
+      <div class="icon">&#128172;</div>
+      <h4>Only Bank Alerts</h4>
+      <p>We only process transaction alerts from your bank. Never OTPs, never personal messages.</p>
+    </div>
+    <div class="summary-card">
+      <div class="icon">&#128737;</div>
+      <h4>Encrypted Storage</h4>
+      <p>AES-256 encrypted database with keys in Android's secure storage.</p>
+    </div>
+  </div>
+
   <div class="callout callout-security">
     <strong>Your data never leaves your device.</strong>
-    spnd. has no servers, no cloud storage, and no analytics. All financial data is stored locally in an
-    encrypted database on your phone. You can verify this by using the app in Airplane Mode — it works
-    exactly the same.
+    spnd. has no servers, no backend, no cloud database, and no analytics. All your financial data is
+    stored locally in an AES-256 encrypted database on your phone. We have no ability to access your
+    data remotely because no copy exists outside your device. You can verify this by using the app in Airplane Mode — it works exactly the same.
   </div>
 
   <!-- ────────────────────────────────────────────────────────────── -->
@@ -153,58 +194,95 @@
   </p>
   <p>
     spnd. is built on a core principle: <strong>your financial data belongs to you and only you.</strong>
-    The app operates entirely offline. There are no user accounts, no registration, no cloud sync,
-    and no data collection of any kind.
+    The app operates entirely offline. There are no user accounts, no registration, no login, no cloud sync,
+    and no data collection of any kind. We do not run any servers and have no mechanism to access your data remotely.
   </p>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>2. SMS Access — Core Functionality <span class="badge-required">Restricted Permission</span></h2>
+  <h2>2. Our Zero-Server Architecture</h2>
+  <p>
+    Unlike most finance apps, spnd. does <strong>not</strong> have any backend infrastructure:
+  </p>
+  <ul>
+    <li><strong>No servers</strong> — we do not operate, rent, or use any server, cloud instance, or API endpoint</li>
+    <li><strong>No database in the cloud</strong> — there is no Firebase, AWS, Azure, or any remote database</li>
+    <li><strong>No user accounts</strong> — there is no registration, login, or sign-up process</li>
+    <li><strong>No data transmission</strong> — the app makes zero network calls to any server owned by us</li>
+    <li><strong>No analytics or telemetry</strong> — we do not use Google Analytics, Firebase Analytics, Mixpanel, Amplitude, Crashlytics, Sentry, or any other tracking tool</li>
+  </ul>
+  <p>
+    The only network activity the app performs is a one-time font download from
+    Google Fonts when the app first launches, described in detail below.
+  </p>
+
+  <div class="callout callout-info">
+    <strong>How to verify this yourself:</strong>
+    Turn on Airplane Mode and use spnd. — every feature works normally because nothing depends on the
+    internet. You can also check Android Settings &rarr; Apps &rarr; spnd. &rarr; Mobile data &amp; Wi-Fi
+    to see that the app uses negligible data.
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────── -->
+  <h2>3. SMS Access — Core Functionality <span class="badge-required">Restricted Permission</span></h2>
 
   <p>
     spnd. requests <strong>READ_SMS</strong> and <strong>RECEIVE_SMS</strong> permissions to provide its
     core functionality: automatic transaction tracking from bank SMS alerts.
   </p>
 
-  <h3>2.1 Why SMS Access Is Required</h3>
+  <h3>3.1 Why SMS Access Is Required</h3>
   <p>
     In India, banks send transaction alerts via SMS for every debit and credit. These SMS messages are
     the only real-time, programmatic source of transaction data available to consumers. Indian banks do
     not provide open APIs, webhooks, or any other mechanism for personal finance apps to access
     transaction data. <strong>SMS reading is the only technically viable method</strong> to automatically
-    track expenses.
+    track expenses without manual entry.
   </p>
-  <p>Without SMS access, users would need to manually enter every transaction — making the app significantly less useful and defeating its core purpose.</p>
 
-  <h3>2.2 How SMS Processing Works</h3>
+  <h3>3.2 How SMS Processing Works</h3>
   <div class="flow-diagram">
     Bank sends SMS <span class="arrow">&rarr;</span> spnd. receives SMS<br/>
     <span class="arrow">&darr;</span><br/>
     Is it from a known bank sender? <span class="arrow">&rarr;</span> No <span class="arrow">&rarr;</span> <strong>Ignored completely</strong><br/>
     <span class="arrow">&darr;</span> Yes<br/>
-    Is it a transaction alert (debit/credit)? <span class="arrow">&rarr;</span> No <span class="arrow">&rarr;</span> <strong>Discarded</strong><br/>
+    Is it an OTP or promotional message? <span class="arrow">&rarr;</span> Yes <span class="arrow">&rarr;</span> <strong>Rejected immediately</strong><br/>
+    <span class="arrow">&darr;</span> No<br/>
+    Is it a transaction alert (debit/credit/sent/received)? <span class="arrow">&rarr;</span> No <span class="arrow">&rarr;</span> <strong>Discarded</strong><br/>
     <span class="arrow">&darr;</span> Yes<br/>
     Extract: amount, merchant, date, account <span class="arrow">&rarr;</span> Save to <strong>local encrypted DB</strong><br/>
     <span class="arrow">&darr;</span><br/>
     <strong>No data is ever transmitted. Zero network calls.</strong>
   </div>
 
-  <h3>2.3 What We Read vs. What We Ignore</h3>
+  <h3>3.3 SMS Filtering — Multi-Layer Protection</h3>
+  <p>spnd. applies a strict, multi-layer filter before processing any SMS:</p>
+  <ol>
+    <li><strong>OTP rejection</strong> — 20+ patterns detect and immediately skip all OTP and verification code messages</li>
+    <li><strong>Spam/promo rejection</strong> — 200+ patterns reject marketing, promotional, and non-transactional messages</li>
+    <li><strong>URL filtering</strong> — non-bank URLs are rejected against a curated whitelist of Indian bank domains</li>
+    <li><strong>Failed transaction rejection</strong> — failed, reversed, and declined transactions are filtered out</li>
+    <li><strong>Currency validation</strong> — message must contain an amount in Indian currency format (INR, Rs., etc.)</li>
+    <li><strong>Transaction type validation</strong> — message must contain a debit, credit, sent, or received indicator keyword</li>
+    <li><strong>Sender validation</strong> — sender must be a known Indian bank sender ID (e.g., VM-ICICIB, AD-SBIINB, BZ-AXISBK) or the message must contain an account reference</li>
+  </ol>
+
+  <h3>3.4 What We Process vs. What We Ignore</h3>
   <div class="two-col">
     <div class="col-card">
-      <h4><span class="check">&#10003;</span> What We Read</h4>
+      <h4><span class="check">&#10003;</span> What We Process</h4>
       <ul>
         <li>Bank debit alerts (e.g., "Rs 500 debited from A/c XX1234")</li>
         <li>Bank credit alerts (e.g., "Rs 10,000 credited to A/c XX5678")</li>
-        <li>UPI sent/received notifications (e.g., "Sent Rs 200 to Rahul", "Received Rs 500 from Priya")</li>
-        <li>Transfer alerts (NEFT, IMPS, RTGS between accounts)</li>
-        <li>Messages from verified Indian bank senders only (e.g., VM-ICICIB, AD-SBIINB, BZ-AXISBK)</li>
+        <li>UPI sent/received notifications</li>
+        <li>Transfer alerts (NEFT, IMPS, RTGS)</li>
+        <li>Messages from verified Indian bank senders only</li>
       </ul>
     </div>
     <div class="col-card">
       <h4><span class="cross">&#10007;</span> What We NEVER Read</h4>
       <ul>
         <li>OTP / verification codes — detected and skipped immediately</li>
-        <li>Personal messages from contacts</li>
+        <li>Personal messages from your contacts</li>
         <li>Promotional or marketing SMS</li>
         <li>Non-banking SMS of any kind</li>
         <li>WhatsApp, Telegram, or other app messages</li>
@@ -212,93 +290,100 @@
     </div>
   </div>
 
-  <h3>2.4 SMS Data Extracted</h3>
+  <h3>3.5 Data Extracted from Bank SMS</h3>
   <p>From each qualifying bank SMS, spnd. extracts <strong>only</strong> the following fields:</p>
   <table>
     <tr><th>Field</th><th>Example</th><th>Purpose</th></tr>
     <tr><td>Transaction amount</td><td>Rs 500</td><td>Track spending</td></tr>
     <tr><td>Merchant / payee name</td><td>Swiggy, Amazon</td><td>Categorize expense</td></tr>
-    <tr><td>Transaction date & time</td><td>10 Jun 2026, 14:30</td><td>Timeline ordering</td></tr>
+    <tr><td>Transaction date &amp; time</td><td>10 Jun 2026, 14:30</td><td>Timeline ordering</td></tr>
     <tr><td>Account identifier (last 4 digits)</td><td>XX1234</td><td>Per-account spending view</td></tr>
     <tr><td>Transaction type</td><td>UPI / NEFT / ATM</td><td>Payment method tracking</td></tr>
-    <tr><td>Debit or Credit</td><td>Debited / Credited</td><td>Income vs expense</td></tr>
+    <tr><td>Debit or Credit</td><td>Debited / Credited / Sent / Received</td><td>Income vs expense classification</td></tr>
+    <tr><td>Sender address (DLT code)</td><td>VM-ICICIB</td><td>Duplicate detection</td></tr>
   </table>
 
   <div class="callout callout-sms">
     <strong>SMS permission is entirely optional.</strong>
-    Users can deny SMS permission during onboarding and use spnd. in manual mode — adding transactions
+    You can deny SMS permission during onboarding and use spnd. in manual mode — adding transactions
     by hand. SMS reading can also be disabled at any time from within the app (Settings &rarr; SMS Import &rarr; toggle off)
     or from Android system settings (Settings &rarr; Apps &rarr; spnd. &rarr; Permissions &rarr; SMS &rarr; Deny).
   </div>
 
-  <h3>2.5 Background SMS Processing</h3>
+  <h3>3.6 Background SMS Processing</h3>
   <p>
-    When granted RECEIVE_SMS permission, spnd. uses Android's WorkManager to process incoming bank SMS
+    When granted SMS permission, spnd. uses Android's WorkManager to process incoming bank SMS
     in the background. This ensures transactions are captured even when the app is not open.
   </p>
   <ul>
-    <li>Background processing follows the exact same rules — only bank transaction SMS are processed</li>
+    <li>Background processing follows the exact same filtering rules — only bank transaction SMS are processed</li>
+    <li>WorkManager runs a periodic check every 15 minutes for any missed SMS</li>
     <li>Processing takes less than 1 second per SMS</li>
-    <li>No persistent background service runs — the app wakes only when a new SMS arrives</li>
-    <li>Users can revoke this permission at any time</li>
-  </ul>
-
-  <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>3. Contacts Access <span class="badge-optional">Optional Permission</span></h2>
-  <p>
-    spnd. requests READ_CONTACTS permission for <strong>one purpose only</strong>: to allow users to
-    pick a contact when creating merchant rules in Settings. This helps users map a phone number to a
-    merchant name for better transaction categorization.
-  </p>
-  <ul>
-    <li>Contacts are accessed only when the user explicitly taps "Pick from contacts" in the Merchant Rules screen</li>
-    <li>Only the selected contact's name and phone number are used — to populate the rule form</li>
-    <li>No contact data is stored, indexed, or transmitted</li>
-    <li>This permission is optional — users can type merchant details manually instead</li>
-    <li>The contact picker is the standard Android system contact picker</li>
+    <li>No persistent background service runs — the app wakes only briefly when needed</li>
+    <li>You can revoke SMS permission at any time — the app continues to work in manual mode</li>
   </ul>
 
   <!-- ────────────────────────────────────────────────────────────── -->
   <h2>4. All Permissions Explained</h2>
+  <p>spnd. requests only the minimum permissions required for its features. Here is every permission the app uses and why:</p>
   <table>
     <tr><th>Permission</th><th>Purpose</th><th>Required?</th></tr>
-    <tr><td>READ_SMS</td><td>Read existing bank transaction SMS on app setup (historical import)</td><td>Optional — app works without it</td></tr>
-    <tr><td>RECEIVE_SMS</td><td>Detect new bank transaction SMS in real-time</td><td>Optional — app works without it</td></tr>
-    <tr><td>READ_CONTACTS</td><td>Pick a contact when creating merchant rules in Settings</td><td>Optional — users can type manually instead</td></tr>
-    <tr><td>INTERNET</td><td>Google Sign-In for Google Drive backup (user-initiated only)</td><td>No data sent to developer servers</td></tr>
-    <tr><td>USE_BIOMETRIC</td><td>Fingerprint / face unlock for app lock</td><td>Optional — PIN also available</td></tr>
-    <tr><td>POST_NOTIFICATIONS</td><td>Show transaction capture notifications</td><td>Optional — can be disabled</td></tr>
-    <tr><td>RECEIVE_BOOT_COMPLETED</td><td>Restart background SMS listener after phone reboot</td><td>Automatic — no user action needed</td></tr>
+    <tr><td>READ_SMS</td><td>Read existing bank transaction SMS from your inbox (historical import on first setup)</td><td>Optional — app works without it in manual mode</td></tr>
+    <tr><td>RECEIVE_SMS</td><td>Detect new incoming bank transaction SMS in real-time</td><td>Optional — app works without it in manual mode</td></tr>
+    <tr><td>INTERNET</td><td>One-time font download on first launch; opening external links (Play Store, email) when you tap them</td><td>No data is sent to developer servers</td></tr>
+    <tr><td>USE_BIOMETRIC / USE_FINGERPRINT</td><td>Fingerprint or face unlock for app lock</td><td>Optional — 4-digit PIN is also available</td></tr>
+    <tr><td>POST_NOTIFICATIONS</td><td>Show transaction capture, daily summary, and bill reminder notifications (Android 13+)</td><td>Optional — can be disabled in Android settings</td></tr>
+    <tr><td>RECEIVE_BOOT_COMPLETED</td><td>Restart background SMS listener and scheduled tasks after phone reboot</td><td>Automatic — ensures no transactions are missed</td></tr>
     <tr><td>VIBRATE</td><td>Haptic feedback for notifications</td><td>Standard Android permission</td></tr>
-    <tr><td>SCHEDULE_EXACT_ALARM</td><td>Schedule periodic SMS checks via WorkManager</td><td>Background processing support</td></tr>
-    <tr><td>WAKE_LOCK</td><td>Keep device awake briefly during SMS processing</td><td>Background processing support</td></tr>
+    <tr><td>WAKE_LOCK</td><td>Keep device awake briefly during background SMS processing via WorkManager</td><td>Background processing support</td></tr>
+    <tr><td>SCHEDULE_EXACT_ALARM</td><td>Schedule the daily 9 PM spend summary notification at a precise time</td><td>Automatic — ensures timely notification delivery</td></tr>
   </table>
 
+  <div class="callout callout-info">
+    <strong>What we do NOT request:</strong>
+    spnd. does not request access to your contacts, camera, microphone, location, storage (beyond app-private),
+    phone call logs, calendar, or any other sensitive permission. We request only what is needed and nothing more.
+  </div>
+
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>5. Data Storage & Encryption</h2>
+  <h2>5. Data Storage &amp; Encryption</h2>
 
   <h3>5.1 Local-Only Architecture</h3>
   <p>
-    spnd. uses a <strong>zero-server architecture</strong>. There is no backend, no API, no cloud database,
-    and no remote server of any kind. All data resides exclusively on the user's device.
+    All your data resides exclusively on your device. There is no backend server, no API, no cloud database,
+    and no remote storage of any kind under our control. When you uninstall the app, all data is
+    permanently and irreversibly deleted from your phone.
   </p>
 
   <h3>5.2 Encryption Standards</h3>
   <table>
     <tr><th>Data</th><th>Encryption Method</th><th>Where Stored</th></tr>
-    <tr><td>Transaction database</td><td>AES-256 via SQLCipher</td><td>Device local storage</td></tr>
-    <tr><td>Database encryption key</td><td>Android Keystore (hardware-backed)</td><td>Secure element / TEE</td></tr>
-    <tr><td>App lock PIN</td><td>SHA-256 hash + salt</td><td>Android EncryptedSharedPreferences</td></tr>
-    <tr><td>Google Drive backup (if used)</td><td>AES-256 with user-set password</td><td>User's own Google Drive</td></tr>
-    <tr><td>Local backup file</td><td>AES-256 with user-set password</td><td>Device Downloads folder</td></tr>
+    <tr><td>Transaction database</td><td>AES-256 via SQLCipher</td><td>App-private storage on device</td></tr>
+    <tr><td>Database encryption key</td><td>Android Keystore (hardware-backed on supported devices)</td><td>Android EncryptedSharedPreferences</td></tr>
+    <tr><td>App lock PIN</td><td>Salted hash, stored in Android's encrypted storage</td><td>Android EncryptedSharedPreferences</td></tr>
+    <tr><td>Local backup file (if used)</td><td>AES-256-CBC with PBKDF2-HMAC-SHA256 key derivation (50,000 iterations) from a password you set</td><td>Location you choose on your device</td></tr>
+    <tr><td>Backup encryption key</td><td>Random 32-byte key via secure random generator</td><td>Android Keystore via FlutterSecureStorage</td></tr>
   </table>
 
-  <h3>5.3 App Lock & Screen Security</h3>
+  <h3>5.3 What Is Stored in the Database</h3>
+  <p>The encrypted local database contains the following tables:</p>
   <ul>
-    <li><strong>4-digit PIN lock</strong> — prevents unauthorized access to the app</li>
-    <li><strong>Biometric unlock</strong> — fingerprint or face recognition via Android BiometricPrompt API</li>
-    <li><strong>Screenshot protection</strong> — blocks screenshots and screen recording when enabled (FLAG_SECURE)</li>
-    <li><strong>Root detection</strong> — warns users if device is rooted, as rooted devices may compromise data security</li>
+    <li><strong>Transactions</strong> — parsed transaction records (amount, merchant, date, category, account, type, raw SMS text)</li>
+    <li><strong>Merchant rules</strong> — your custom categorization rules for merchants</li>
+    <li><strong>Settings</strong> — your app preferences (budget amounts, theme, notification settings)</li>
+    <li><strong>Account overrides</strong> — custom names or labels you assign to your bank accounts</li>
+    <li><strong>Manual accounts</strong> — any accounts you add manually</li>
+    <li><strong>Insights</strong> — locally computed spending insights and summaries</li>
+  </ul>
+
+  <h3>5.4 Security Features</h3>
+  <ul>
+    <li><strong>4-digit PIN lock</strong> — prevents unauthorized access to the app; PIN is salted and hashed, never stored in plain text</li>
+    <li><strong>Biometric unlock</strong> — fingerprint or face recognition via Android's BiometricPrompt API as an alternative to PIN</li>
+    <li><strong>Screenshot protection</strong> — blocks screenshots and screen recording when enabled using Android's FLAG_SECURE; enabled by default</li>
+    <li><strong>Root detection</strong> — detects rooted devices and warns you that rooted devices may expose financial data to other apps; the app still works normally — it warns, never blocks</li>
+    <li><strong>HTTPS only</strong> — cleartext HTTP traffic is blocked at the Android level (<code>usesCleartextTraffic=false</code>); the limited network calls the app makes all use HTTPS</li>
+    <li><strong>Auto-lock</strong> — the app automatically locks after 60 seconds in the background (configurable)</li>
   </ul>
 
   <!-- ────────────────────────────────────────────────────────────── -->
@@ -306,24 +391,28 @@
 
   <div class="two-col">
     <div class="col-card">
-      <h4><span class="check">&#10003;</span> Stored on Your Device</h4>
+      <h4><span class="check">&#10003;</span> Stored Locally on Your Device</h4>
       <ul>
         <li>Parsed transaction records (amount, merchant, date, category)</li>
         <li>Manually added transactions</li>
-        <li>Budget settings and preferences</li>
+        <li>Budget settings and amounts</li>
         <li>Merchant categorization rules you create</li>
-        <li>App settings (theme, currency, lock PIN)</li>
-        <li>Original SMS text (for reference only)</li>
+        <li>App settings (theme, currency, notifications)</li>
+        <li>Original SMS text (stored locally for reference and duplicate detection only)</li>
+        <li>Custom account labels</li>
+        <li>Locally computed spending insights</li>
       </ul>
     </div>
     <div class="col-card">
       <h4><span class="cross">&#10007;</span> NEVER Collected or Transmitted</h4>
       <ul>
-        <li>Personal identity (name, age, gender, email)</li>
+        <li>Your name, age, gender, email, or any personal identity</li>
         <li>Device identifiers (IMEI, Android ID, advertising ID)</li>
-        <li>Location or IP address</li>
+        <li>Your location or IP address</li>
         <li>Usage analytics, crash reports, or telemetry</li>
         <li>Browsing history or app usage patterns</li>
+        <li>Your contacts, photos, or files</li>
+        <li>Non-bank SMS messages (personal, OTP, promotional)</li>
         <li>Any data to any server, ever</li>
       </ul>
     </div>
@@ -331,106 +420,165 @@
 
   <!-- ────────────────────────────────────────────────────────────── -->
   <h2>7. Data Sharing</h2>
-  <p>spnd. does <strong>not</strong> share any user data with:</p>
+  <p>spnd. does <strong>not</strong> share any user data with anyone. Specifically:</p>
   <ul>
-    <li>The developer or any affiliated company</li>
-    <li>Third-party analytics providers (Google Analytics, Firebase Analytics, Mixpanel, etc.)</li>
-    <li>Advertising networks or data brokers</li>
-    <li>Other apps installed on the device</li>
-    <li>Any external server, API, or service</li>
+    <li>The developer (Godi Narayana Swamy) has <strong>no way to access your data</strong> — there are no servers to receive it</li>
+    <li>No third-party analytics providers (Google Analytics, Firebase Analytics, Mixpanel, Amplitude, etc.)</li>
+    <li>No crash reporting services (Crashlytics, Sentry, Bugsnag, etc.)</li>
+    <li>No other apps installed on your device</li>
+    <li>No external server, API, or service of any kind</li>
   </ul>
 
   <div class="callout callout-security">
-    <strong>Zero third-party SDKs for tracking.</strong>
-    spnd. does not integrate any analytics, advertising, or tracking SDK. The INTERNET permission is
-    used solely for optional Google Drive backup — initiated by the user, stored in the user's own
-    Google Drive account, encrypted with a user-chosen password.
+    <strong>Zero third-party tracking SDKs.</strong>
+    spnd. does not integrate any analytics, crash reporting, or tracking SDK. We have verified
+    this by auditing every dependency in the app. The app contains no code that sends your data anywhere.
   </div>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>8. Google Drive Backup (Optional)</h2>
-  <p>Users may optionally back up their data to their own Google Drive account.</p>
+  <h2>8. Local Backup</h2>
+  <p>
+    spnd. lets you save a password-protected backup file to your phone's storage.
+    This is completely offline and does not require an internet connection.
+  </p>
+
+  <h3>8.1 How It Works</h3>
+  <ol>
+    <li>You tap "Backup" in Settings — this is never automatic</li>
+    <li>You set a backup password that only you know</li>
+    <li>The app exports your transaction data and encrypts it using AES-256-CBC with PBKDF2-HMAC-SHA256 key derivation (50,000 iterations)</li>
+    <li>The encrypted file is saved to a location you choose on your device</li>
+  </ol>
+
+  <h3>8.2 Important Details</h3>
   <ul>
-    <li>Backup is user-initiated — never automatic</li>
-    <li>Data is encrypted with AES-256 using a password the user sets</li>
-    <li>The backup file is stored in the user's own Google Drive — the developer has no access</li>
-    <li>Google Sign-In is used only to authenticate with Google Drive API — no user profile data is read or stored</li>
-    <li>Users can delete the backup file from their Google Drive at any time</li>
+    <li><strong>Encrypted:</strong> The backup file is encrypted with your password — without it, the file cannot be read by anyone</li>
+    <li><strong>Your control:</strong> You choose where to save the file and can delete it at any time</li>
+    <li><strong>Portable:</strong> The backup can be restored on any device where you know the password</li>
+    <li><strong>No internet:</strong> The entire backup and restore process is fully offline</li>
+    <li><strong>Unrecoverable if forgotten:</strong> If you forget the password, the backup cannot be recovered</li>
   </ul>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>9. User Controls & Rights</h2>
+  <h2>9. Network Activity</h2>
+  <p>The app performs only the following network activity:</p>
+  <table>
+    <tr><th>Activity</th><th>When</th><th>What Happens</th><th>Data Sent</th></tr>
+    <tr>
+      <td><strong>Google Fonts download</strong></td>
+      <td>Once, on first app launch</td>
+      <td>Downloads the Inter and JetBrains Mono typefaces from Google Fonts for the app's UI. Cached locally — never downloaded again.</td>
+      <td>Standard HTTP request only. No personal data.</td>
+    </tr>
+    <tr>
+      <td><strong>External links</strong></td>
+      <td>When you tap a link (Play Store, email, Instagram) in the About screen</td>
+      <td>Opens the link in your default browser or email app via Android's system handler. spnd. itself makes no network request.</td>
+      <td>No data is sent by the app. The link is opened by the OS.</td>
+    </tr>
+  </table>
+  <p>The app does not phone home, check for updates, or communicate with any server.</p>
+
+  <!-- ────────────────────────────────────────────────────────────── -->
+  <h2>10. Notifications &amp; Alerts</h2>
+  <p>
+    All notifications in spnd. are <strong>local notifications</strong> generated on your device. They are
+    not push notifications — there is no server sending them. You can disable any or all notification
+    channels from Android Settings &rarr; Apps &rarr; spnd. &rarr; Notifications.
+  </p>
+  <table>
+    <tr><th>Notification Type</th><th>What It Does</th></tr>
+    <tr><td>Transaction captured</td><td>Confirms when a new bank SMS is successfully parsed and recorded</td></tr>
+    <tr><td>Daily spend summary</td><td>Shows your total spending for the day, delivered at 9 PM</td></tr>
+    <tr><td>Weekly digest</td><td>Summarizes your week's total spending</td></tr>
+    <tr><td>Budget exceeded</td><td>Alerts you when a category budget is overspent</td></tr>
+    <tr><td>Credit card bill reminder</td><td>Shows your CC bill total and minimum due with days remaining</td></tr>
+    <tr><td>Upcoming bill / autopay</td><td>Reminds you about bills or automatic debit payments due in the coming days</td></tr>
+    <tr><td>Unused subscription</td><td>Flags subscriptions with no recent usage</td></tr>
+  </table>
+  <p>
+    All notification content is computed locally from your on-device data. No spending information
+    is transmitted to any server to generate these alerts.
+  </p>
+
+  <!-- ────────────────────────────────────────────────────────────── -->
+  <h2>11. User Consent Flow</h2>
+  <p>spnd. follows a transparent, step-by-step consent process during onboarding:</p>
+  <ol>
+    <li><strong>SMS Permission Screen</strong> — clearly explains why SMS access is needed, with a visible option to skip</li>
+    <li><strong>Android System Dialog</strong> — the standard Android runtime permission dialog is shown; you must actively tap "Allow"</li>
+    <li><strong>Historical Import Choice</strong> — you choose how far back to import SMS (1 month, 3 months, or custom date)</li>
+    <li><strong>Notification Permission</strong> — requested separately on Android 13+ with clear explanation</li>
+  </ol>
+  <p>At no point is any permission enabled silently or without your explicit action.</p>
+
+  <!-- ────────────────────────────────────────────────────────────── -->
+  <h2>12. User Controls &amp; Your Rights</h2>
+  <p>You have full control over your data at all times:</p>
   <table>
     <tr><th>Action</th><th>How to Do It</th></tr>
-    <tr><td>Disable SMS reading</td><td>Settings &rarr; SMS Import &rarr; toggle off, or revoke via Android Settings &rarr; Apps &rarr; spnd. &rarr; Permissions</td></tr>
-    <tr><td>Disable contacts access</td><td>Android Settings &rarr; Apps &rarr; spnd. &rarr; Permissions &rarr; Contacts &rarr; Deny</td></tr>
-    <tr><td>Disable notifications</td><td>Android Settings &rarr; Apps &rarr; spnd. &rarr; Notifications &rarr; toggle off</td></tr>
-    <tr><td>View any transaction</td><td>Tap any transaction in the Transactions tab</td></tr>
+    <tr><td>Disable SMS reading</td><td>Settings &rarr; SMS Import &rarr; toggle off, or revoke via Android Settings &rarr; Apps &rarr; spnd. &rarr; Permissions &rarr; SMS &rarr; Deny</td></tr>
+    <tr><td>Disable notifications</td><td>Android Settings &rarr; Apps &rarr; spnd. &rarr; Notifications &rarr; toggle off individual channels or all</td></tr>
+    <tr><td>Disable screenshot protection</td><td>Settings &rarr; Security &rarr; Screenshot Protection &rarr; toggle off</td></tr>
+    <tr><td>View any transaction</td><td>Tap any transaction in the Transactions tab to see full details including original SMS</td></tr>
     <tr><td>Edit any transaction</td><td>Tap transaction &rarr; Edit merchant name, category, or amount</td></tr>
     <tr><td>Delete a transaction</td><td>Tap transaction &rarr; Delete</td></tr>
-    <tr><td>Export / backup data</td><td>Settings &rarr; Backup &rarr; Google Drive or Local backup</td></tr>
-    <tr><td>Delete ALL data permanently</td><td>Uninstall the app — all local data is immediately and irreversibly deleted</td></tr>
+    <tr><td>Back up your data</td><td>Settings &rarr; Backup &rarr; Local backup</td></tr>
+    <tr><td>Restore your data</td><td>Settings &rarr; Backup &rarr; Restore from local file</td></tr>
+    <tr><td>Delete ALL data permanently</td><td>Uninstall the app — all local data is immediately and irreversibly deleted. Alternatively, clear app data from Android Settings.</td></tr>
   </table>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>10. User Consent Flow</h2>
-  <p>spnd. follows a transparent, step-by-step consent process during onboarding:</p>
-  <ol style="padding-left: 24px; margin-bottom: 16px;">
-    <li style="margin-bottom: 8px;"><strong>SMS Permission Screen</strong> — clearly explains why SMS access is needed, with an option to skip</li>
-    <li style="margin-bottom: 8px;"><strong>Android System Dialog</strong> — the standard Android runtime permission dialog is shown; the user must actively tap "Allow"</li>
-    <li style="margin-bottom: 8px;"><strong>Historical Import Choice</strong> — user chooses how far back to import SMS (1 month, 3 months, or custom date)</li>
-    <li style="margin-bottom: 8px;"><strong>Contacts Permission</strong> — requested separately with clear explanation; can be skipped</li>
-  </ol>
-  <p>At no point is any permission enabled silently or without the user's explicit action.</p>
-
-  <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>11. Data Retention</h2>
+  <h2>13. Data Retention</h2>
   <ul>
-    <li><strong>Transaction data</strong> — retained on device for as long as the app is installed. Permanently deleted on uninstall.</li>
-    <li><strong>Original SMS text</strong> — stored locally as a reference alongside parsed transaction data. Never transmitted. Deleted on uninstall.</li>
-    <li><strong>Settings & preferences</strong> — stored locally in EncryptedSharedPreferences. Deleted on uninstall.</li>
-    <li><strong>Google Drive backup</strong> — stored in the user's own Google Drive until the user deletes it. The developer has no access to this file.</li>
-    <li><strong>No server-side retention</strong> — because there are no servers, there is no data to retain outside the device.</li>
+    <li><strong>Transaction data</strong> — retained on your device for as long as the app is installed. Permanently and irreversibly deleted when you uninstall the app or clear app data.</li>
+    <li><strong>Original SMS text</strong> — stored locally alongside parsed transaction data for reference and duplicate detection. Never transmitted. Deleted on uninstall.</li>
+    <li><strong>Settings &amp; preferences</strong> — stored locally in encrypted storage. Deleted on uninstall.</li>
+    <li><strong>Local backup file</strong> — stored at the location you chose until you delete it. Encrypted with your password.</li>
+    <li><strong>No server-side retention</strong> — because there are no servers, there is no data retained anywhere outside your device.</li>
   </ul>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>12. Children's Privacy</h2>
+  <h2>14. Children's Privacy</h2>
   <p>
     spnd. is a financial management tool designed for adults. The app is not directed at children
-    under 18 years of age. We do not knowingly collect any information from children. If you believe
-    a child has provided data through this app, please contact us and we will assist in deletion guidance.
+    under 18 years of age. We do not knowingly collect any information from anyone, including children.
+    Since the app stores all data locally and transmits nothing, no data from any user — adult or child —
+    ever reaches us.
   </p>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>13. Compliance</h2>
+  <h2>15. Compliance</h2>
   <p>spnd. is designed in compliance with:</p>
   <ul>
-    <li><strong>Google Play Developer Policy</strong> — including the Restricted Permissions policy for SMS access</li>
-    <li><strong>Information Technology Act, 2000 (India)</strong> — including reasonable security practices for sensitive personal data</li>
-    <li><strong>Digital Personal Data Protection Act, 2023 (India)</strong> — data minimization, purpose limitation, and user control</li>
+    <li><strong>Google Play Developer Policy</strong> — including the Restricted Permissions policy for SMS access, with detailed justification for READ_SMS and RECEIVE_SMS usage</li>
+    <li><strong>Information Technology Act, 2000 (India)</strong> — including reasonable security practices for sensitive personal data as prescribed under the IT Rules, 2011</li>
+    <li><strong>Digital Personal Data Protection Act, 2023 (India)</strong> — data minimization (we collect only what is needed), purpose limitation (SMS is used only for expense tracking), and user control (you can disable any permission at any time)</li>
   </ul>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>14. Changes to This Policy</h2>
+  <h2>16. Changes to This Policy</h2>
   <p>
-    If we make material changes to this Privacy Policy, we will update the "Effective" date at the top
-    and notify users through an in-app notice. Continued use of the app after changes constitutes
-    acceptance of the revised policy.
+    If we make material changes to this Privacy Policy, we will update the "Effective" date and version
+    number at the top and notify users through an in-app notice. The latest version of this policy is
+    always available within the app (Settings &rarr; About &rarr; Privacy Policy) and on our GitHub page.
+    Continued use of the app after changes constitutes acceptance of the revised policy.
   </p>
 
   <!-- ────────────────────────────────────────────────────────────── -->
-  <h2>15. Contact</h2>
+  <h2>17. Contact Us</h2>
   <p>For questions, concerns, or requests regarding this Privacy Policy or your data:</p>
   <table>
     <tr><td><strong>Developer</strong></td><td>Godi Narayana Swamy</td></tr>
-    <tr><td><strong>Email</strong></td><td>godinarayanaswamy@gmail.com</td></tr>
+    <tr><td><strong>Email</strong></td><td>spnd.support@gmail.com</td></tr>
+    <tr><td><strong>Email (personal)</strong></td><td>godinarayanaswamy@gmail.com</td></tr>
     <tr><td><strong>Location</strong></td><td>Hyderabad, Telangana, India</td></tr>
     <tr><td><strong>Response time</strong></td><td>Within 48 hours</td></tr>
   </table>
 
   <footer>
     <p>This privacy policy applies to the spnd. Android application (package: com.spndai.spnd) distributed via Google Play Store.</p>
-    <p>&copy; 2026 Godi Narayana Swamy. All rights reserved.</p>
+    <p>&copy; 2025–2026 Godi Narayana Swamy. All rights reserved.</p>
   </footer>
 
 </body>
